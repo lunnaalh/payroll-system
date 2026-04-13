@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Learn about KemBALI Biru's projects and join our mission to protect Bali's oceans"
+    />
+    <title>What We Do | Kembali Biru</title>
+    <link rel="stylesheet" href="css/style.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <div class="slide-menu" id="mobileMenu">
+      <button class="close-btn" aria-label="Close menu">&times;</button>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="take-action.html">Take Action</a></li>
+        <li><a href="about-us.html">About</a></li>
+        <li><a href="what-we-do.html">What We Do</a></li>
+        <li><a href="members.html">Members</a></li>
+        <li><a href="donations.html">Donations</a></li>
+      </ul>
+    </div>
+
+    <header class="navbar">
+      <a href="index.html" class="logo-left">
+        <img
+          src="images/logo_kembali_biru-removebg-preview.png"
+          alt="KemBALI Biru Logo"
+        />
+        <span class="logo-text">kemBALI Biru</span>
+      </a>
+      <button class="menu-link" id="menuBtn" aria-label="Toggle menu">
+        <i class="fa fa-bars"></i>
+      </button>
+    </header>
+
+    <section class="hero">
+      <img src="images/marine1.jpg" alt="What We Do Banner" />
+      <div class="overlay">
+        <h1>BE A PART OF KEMBALI BIRU</h1>
+        <p>
+          Join us to explore the ways of sustainability and come along with us
+          to find a path to a better future.
+        </p>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="content-section">
+      <div class="content-container">
+        <h2>OUR UPCOMING PROJECTS</h2>
+        <p class="intro-text">
+          Our current project aims to connect as many organizations as possible
+          in Bali. With this, the implementation of the 3 R's, clean-ups, and
+          conservations can be done efficiently, leading us to a sustainable
+          future with green lands and blue oceans.
+        </p>
+        <div class="projects-grid">
+          <div class="project-card">
+            <div class="project-icon">
+              <i class="fas fa-leaf"></i>
+            </div>
+            <h3>The 3 R's Initiative</h3>
+            <p>
+              Reduce, Reuse, and Recycle initiatives to minimize waste and
+              promote sustainable living across Bali.
+            </p>
+          </div>
+          <div class="project-card">
+            <div class="project-icon">
+              <i class="fas fa-water"></i>
+            </div>
+            <h3>Ocean Clean-Ups</h3>
+            <p>
+              Regular clean-up campaigns to remove plastic and pollutants from
+              Bali's beaches and marine ecosystems.
+            </p>
+          </div>
+          <div class="project-card">
+            <div class="project-icon">
+              <i class="fas fa-fish"></i>
+            </div>
+            <h3>Marine Conservation</h3>
+            <p>
+              Protecting coral reefs and marine life through awareness and
+              active conservation efforts.
+            </p>
+          </div>
+          <div class="project-card">
+            <div class="project-icon">
+              <i class="fas fa-handshake"></i>
+            </div>
+            <h3>Organization Network</h3>
+            <p>
+              Connecting local and international organizations to amplify our
+              environmental impact across Bali.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="change-section">
+      <div class="change-container">
+        <div class="change-text">
+          <h2>MAKE A CHANGE</h2>
+          <p>
+            Join us and develop skills and experiences surrounding environmental
+            subjects and sustainable practices. Fill out the form below to be
+            part of our mission!
+          </p>
+          <div class="change-benefits">
+            <div class="benefit-item">
+              <i class="fas fa-star"></i>
+              <span>Gain experience in environmental conservation</span>
+            </div>
+            <div class="benefit-item">
+              <i class="fas fa-star"></i>
+              <span>Join a passionate community of changemakers</span>
+            </div>
+            <div class="benefit-item">
+              <i class="fas fa-star"></i>
+              <span>Make a real impact on Bali's future</span>
+            </div>
+          </div>
+        </div>
+        <form
+          class="change-form"
+          id="joinForm"
+          action="https://formspree.io/f/mqeqrjdr"
+          method="POST"
+        >
+          <div class="form-group">
+            <label for="name">Full Name *</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Enter your full name"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address *</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="your.email@example.com"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              placeholder="+62 813-XXXX-XXXX"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>What role interests you most? *</label>
+            <div class="checkbox-group">
+              <label class="checkbox-label">
+                <input type="checkbox" name="role" value="volunteer" />
+                <span>Visitor (Volunteer Helper)</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="role" value="writer" />
+                <span>Article Writer</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="role" value="web" />
+                <span>Web Maintenance</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="role" value="communication" />
+                <span>Communication Specialist</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="role" value="artist" />
+                <span>Artist / Designer</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="role" value="social" />
+                <span>Social Media Management</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="role" value="other" />
+                <span>Other</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Tell us about yourself</label>
+            <textarea
+              id="message"
+              name="message"
+              placeholder="Why do you want to join KemBALI Biru?"
+              rows="4"
+            ></textarea>
+          </div>
+
+          <button type="submit" class="submit-btn">
+            <span>Join Our Mission</span>
+            <i class="fas fa-arrow-right"></i>
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <section class="contact-page" id="contact">
+      <div class="contact-wrapper">
+        <div class="contact-left">
+          <h2>Contact Us</h2>
+          <p>
+            We welcome volunteers, partners, and collaborators to join our
+            mission to make Bali blue again.
+          </p>
+          <form
+            class="contact-form"
+            action="https://formspree.io/f/mqeqrjdr"
+            method="POST"
+          >
+            <div class="form-group">
+              <label for="contact-name">Name</label>
+              <input
+                type="text"
+                id="contact-name"
+                placeholder="Your Name"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="contact-email">Email</label>
+              <input
+                type="email"
+                id="contact-email"
+                placeholder="Your Email"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="contact-message">Message</label>
+              <textarea
+                id="contact-message"
+                rows="4"
+                placeholder="Your Message"
+              ></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Send Message</button>
+          </form>
+        </div>
+
+        <div class="contact-right">
+          <div class="info-box">
+            <h4><i class="fas fa-phone"></i> PHONE</h4>
+            <p>+62 813-3811-4095</p>
+          </div>
+          <div class="info-box">
+            <h4><i class="fas fa-envelope"></i> EMAIL</h4>
+            <p>keepbalisoceanalive@gmail.com</p>
+          </div>
+          <div class="social-buttons">
+            <a
+              href="https://www.instagram.com/kembali.biru/"
+              class="social instagram"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="fa-brands fa-instagram"></i> Instagram
+            </a>
+            <a
+              href="https://www.youtube.com/@kembalibiru"
+              class="social youtube"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="fa-brands fa-youtube"></i> YouTube
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>&copy; 2025 KemBALI Biru | All Rights Reserved</p>
+    </footer>
+    <script src="js/main.js"></script>
+  </body>
+</html>

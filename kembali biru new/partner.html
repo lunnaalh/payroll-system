@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Partner | KemBALI Biru</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <div class="slide-menu" id="mobileMenu">
+      <button class="close-btn" aria-label="Close menu">&times;</button>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="take-action.html">Take Action</a></li>
+        <li><a href="about-us.html">About</a></li>
+        <li><a href="what-we-do.html">What We Do</a></li>
+        <li><a href="members.html">Members</a></li>
+        <li><a href="donations.html">Donations</a></li>
+      </ul>
+    </div>
+
+    <header class="navbar">
+      <a href="index.html" class="logo-left">
+        <img
+          src="images/logo_kembali_biru-removebg-preview.png"
+          alt="KemBALI Biru Logo"
+        />
+        <span class="logo-text">kemBALI Biru</span>
+      </a>
+      <button class="menu-link" id="menuBtn" aria-label="Toggle menu">
+        <i class="fa fa-bars"></i>
+      </button>
+    </header>
+
+    <main class="partner-page">
+      <section class="partner-hero">
+        <div class="partner-hero-left">
+          <img id="partner-logo" src="" alt="Partner Logo" />
+        </div>
+
+        <div class="partner-hero-right">
+          <h1 id="partner-name">Partner Name</h1>
+          <p id="partner-description">Partner description will appear here.</p>
+        </div>
+      </section>
+
+      <section class="partner-about">
+        <h2>All About <span id="partner-title"></span></h2>
+        <p id="partner-long"></p>
+      </section>
+
+      <section class="partner-links">
+        <div>
+          <h4>Instagram</h4>
+          <p id="partner-email"></p>
+        </div>
+        <div>
+          <h4>Website</h4>
+          <a id="partner-website" href="#" target="_blank">Visit Website</a>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const partners = {
+        "malu-dong": {
+          name: "Malu Dong",
+          description:
+            "Malu Dong is a Bali-based environmental organization focused on tackling plastic pollution through clean-ups, waste management advocacy, and trash barrier installations. Their name, meaning “Shame on You,” reflects their mission to raise awareness and promote responsible waste disposal.",
+          long: "Malu Dong is a Bali-based environmental organization focused on reducing plastic pollution through education and awareness. Believing that lasting change starts with knowledge, they empower communities with the tools and information needed to adopt responsible waste management practices. Through workshops, school programs, and public campaigns, Malu Dong educates people about the environmental impact of plastic waste and the importance of reducing, reusing, and recycling.\n\nBeyond education, Malu Dong actively works to prevent plastic from reaching the ocean. They install trash barriers in rivers, advocate for improved waste management policies, and encourage businesses and individuals to shift away from single-use plastics. By fostering a culture of accountability and environmental responsibility, Malu Dong aims to create a generation that values sustainability and actively contributes to a cleaner future. Their mission is not just about removing waste but preventing it at the source through education and systemic change.",
+          instagram: "@malu.dong",
+          website: "https://maludong.org/id/",
+          logo: "images/malu-dong.jpeg",
+        },
+
+        sensatia: {
+          name: "Sensatia",
+          description:
+            "A Bali-based skincare brand, focuses on natural ingredients and sustainability. To reduce plastic waste, they introduced refill pouches, cutting plastic use by up to 80%. These refills allowing customers to reduce the buying of containers and minimize environmental impact.",
+          long: "Sensatia Botanicals was established in 2000 with the goal of creating cosmetics with natural materials in the tiny village of Jasri in Karangasem, Bali. Sensatia Botanicals started off as a small team making body wash with coconut oil, but soon started getting requests for more products. From there, Sensatia Botanicals developed into a well-known brand across the globe.\n\nSensatia Botanicals has consistently sought to be more than a cosmetics company since its founding. Sensatia Botanicals began by implementing a profit-sharing plan, and employees continue to receive 20% of the company's earnings directly to this day. Given that most of Sensatia Botanicals' staff members are from the nearby Jasri Village, this attempts to strengthen the local community. Sensatia Botanicals also wants to minimize its environmental impact in order to operate a sustainable business.\n\nSensatia Botanicals creates clean, simple products that are full of premium natural ingredients. These ingredients are carefully selected from reputable people and businesses with an emphasis on sustainable business practices. The goods of Sensatia Botanicals are free of parabens, palm oil, artificial coloring, and artificial perfumes, and they are not subjected to animal testing. Before being turned into a product, the company's laboratory tests each raw material that is received. Before being made available to the public, Sensatia Botanicals goods undergo a thorough quality control procedure to guarantee that they all adhere to the company's requirements and standards.",
+          instagram: "@sensatiabotanicals",
+          website: "https://sensatia.com",
+          logo: "images/sensatia-logo.png",
+        },
+
+        lestari: {
+          name: "Lestari",
+          description:
+            "An Indonesian thrift store that provides many variation of affordable clothings, starting from hats, shirts, pants, and even to socks.",
+          long: "Lestari Thrift Shop & Café is a well-established second-hand clothing store located in Bali, Indonesia. Situated at Jalan Raya Kerobokan No.5, Kerobokan Kelod, Kuta Utara, Badung, Bali 80361, the store offers a diverse selection of pre-owned fashion items, including apparel and accessories for men, women, and children.\n\nOperating daily from 8:00 AM to 11:00 PM, Lestari frequently provides special promotions, such as “Buy 3 Get 1 Free.” In addition to its retail offerings, the store features an integrated café, allowing customers to enjoy refreshments while shopping.",
+          instagram: "@lestaridibali",
+          website: "-",
+          logo: "images/lestari_logo.png",
+        },
+
+        "the-body-shop": {
+          name: "The Body Shop",
+          description:
+            "A shop that promotes sustainability through refill stations in over 720 stores, including Indonesia. Customers can buy reusable aluminum bottles and refill shower gels, shampoos, conditioners, and hand washes, reducing plastic waste by millions of bottles annually.",
+          long: "The Body Shop is a global beauty company founded in 1976 by Anita Roddick in Brighton, England. The brand is best known for its commitment to ethically and sustainably produced natural-based beauty products. The Body Shop opposes animal testing and promotes fair trade with suppliers around the world. Their philosophy emphasizes beauty that is not only good for people but also for the environment and communities.\n\nIn Indonesia, The Body Shop has been present since 1992 and continues to contribute to various social and environmental initiatives. One of its flagship programs is “Bring Back Our Bottle,” which encourages customers to return used plastic packaging for recycling. Since its launch in 2008, the program has collected more than 9 million containers, significantly reducing plastic waste. In addition, The Body Shop Indonesia introduced the store concept of “Change-making Beauty Store,” where almost all store materials are made from recycled materials, such as used pallet wood and plastic repurposed into furniture.\n\nBesides focusing on sustainability, The Body Shop is also active in social campaigns. One of its latest campaigns is “Be Seen Be Heard,” which aims to increase youth participation in climate change issues and social advocacy. Through this campaign, they encourage the younger generation to be more aware of environmental impacts and take an active role in social change.\n\nAs a whole, The Body Shop is not just a beauty brand, but also a movement that promotes social justice, environmental sustainability and community empowerment. Their philosophy remains relevant today, making them one of the pioneers in the ethically responsible beauty industry.",
+          instagram: "@thebodyshopindo",
+          website: "https://www.thebodyshop.co.id/",
+          logo: "images/The-Body-Shop-Logo.png",
+        },
+
+        "bersih-dari-sampah": {
+          name: "Bersih Dari Sampah",
+          description:
+            "They are in charge of recycling residual trash responsibly turning inorganic waste into a sand-like material used for construction with eco-friendly incinerators. Their machines undergo regular check-ups and have passed Bali’s Uji Emisi which measures how much pollutants are released from the machine to ensure that it is safe for use.",
+          long: "PT. Bersih Dari Sampah (BDS) is a waste management company based in Denpasar, Bali, Indonesia. Operating as a Tempat Pengolahan Sampah Residu (TPSR), or Residual Waste Processing Facility, BDS specializes in handling residual waste that typically ends up in landfills.\n\nThe company employs eco-friendly incinerators to process inorganic waste, converting it into a sand-like material suitable for construction purposes. These machines undergo regular maintenance and have successfully passed Bali's Uji Emisi emissions test, ensuring their safe and environmentally compliant operation.\n\nBDS collaborates with the Buangin application, enabling users to schedule waste pickups efficiently. This partnership facilitates the proper disposal and processing of residual waste, contributing to Bali's zero-waste initiatives.",
+          instagram: "@bersihdarisampah.denpasar",
+          website: "-",
+          logo: "images/BDS_edited.png",
+        },
+
+        "r-plastic": {
+          name: "R.Plastic",
+          description:
+            "A Bali-based initiative dedicated to transforming plastic bottle caps and used sandals into practical, durable products. Their mission emphasizes rethinking consumption habits, viewing plastic as a valuable resource, and promoting sustainability through education and community engagement. They also organize educational workshops and school field trips to raise eco-awareness among the younger generation.",
+          long: "RPlastic Bali is an initiative focused on transforming plastic waste into practical, durable products. Their mission emphasizes rethinking consumption habits, viewing plastic as a valuable resource, and promoting sustainability through education and community engagement.\n\nThey organize educational workshops and school field trips to raise eco-awareness among the younger generation.\n\nIn Bali, several organizations are addressing plastic pollution through innovative approaches. For instance, Sungai Watch, founded by the Bencheghib siblings, installs floating barriers in rivers to intercept waste before it reaches the ocean. They collect approximately three metric tons of trash daily, which is then sorted and repurposed into items like sandals and furniture.\n\nAdditionally, local environmental groups frequently organize beach clean-ups and educational programs to raise awareness about plastic pollution and encourage sustainable practices among residents and visitors. These collective efforts aim to mitigate the environmental impact of plastic waste and foster a culture of sustainability in Bali.",
+          instagram: "https://www.instagram.com/rplastic_bali/",
+          website: "https://r-plastic.earth/",
+          logo: "images/r-plastic.png",
+        },
+
+        "get-plastic": {
+          name: "Get Plastic",
+          description:
+            "A non-profit organization based in Bali, dedicated to developing systems for managing and processing any plastic waste except plastic bottles into energy, aiming for an Indonesia free from plastic waste issues. They focus on recycling plastic waste through pyrolysis technology, converting it into fuel.",
+          long: "Get Plastic is a non-profit organization based in Bali, Indonesia, dedicated to addressing the pervasive issue of plastic waste through innovative solutions. Their primary focus is on developing systems that manage and process plastic waste into energy, aiming for an Indonesia free from plastic pollution. Central to their approach is the use of pyrolysis technology, which involves converting plastic waste into fuel. This method not only reduces the volume of plastic waste but also provides an alternative energy source.\n\nIn addition to technological solutions, Get Plastic emphasizes community engagement and education. They organize workshops and campaigns to raise awareness about the importance of proper plastic waste management and the potential of viewing plastic as a resource rather than refuse. By empowering local communities with knowledge and practical tools, they aim to foster a collective movement towards sustainability.",
+          instagram: "rplastic_bali",
+          website: "https://getplastic.id/program-kami/",
+          logo: "images/get-plastic.png",
+        },
+
+        "eco-bali-recycling": {
+          name: "Eco Bali Recycling",
+          description:
+            "A waste management company in Bali, founded in 2006, promoting responsible waste disposal and a zero-waste future. They offer any inorganic waste collection, recycling, composting, event waste management, and educational programs. Their services help reduce landfill waste and encourage sustainable living.",
+          long: "EcoBali Recycling, founded in 2006, is a leading waste management company in Bali, Indonesia. With a strong commitment to promoting responsible waste disposal and working toward a zero-waste future, EcoBali offers a wide range of services designed to minimize environmental impact. Their approach focuses on waste collection, recycling, composting, event waste management, and educational programs, all of which contribute to reducing landfill waste and fostering sustainable living practices.\n\nOne of EcoBali’s key services is waste collection and recycling, where they manage inorganic waste for households, businesses, offices, communities, and schools. By ensuring that recyclables are processed correctly, they help prevent unnecessary waste from ending up in landfills. They also provide composting solutions, allowing organic waste to be converted into nutrient-rich compost instead of contributing to pollution.\n\nFor large gatherings and public events, EcoBali offers event waste management services, ensuring that waste is sorted and recycled properly, reducing the environmental footprint of such occasions. Additionally, their waste bank program supports communities and businesses that generate significant amounts of recyclable waste, offering incentives to encourage waste segregation and responsible disposal.\n\nEducation is another crucial aspect of EcoBali’s mission. Through workshops and school programs, they raise awareness about sustainable waste management and inspire behavior changes in individuals and communities. Their efforts aim to shift perspectives on waste, emphasizing the importance of reducing, reusing, and recycling in everyday life.\n\nIn mid-2022, EcoBali became part of PT Wasteforchange Alam Indonesia, further strengthening its impact and reach in providing responsible waste management solutions across the country. With an increasing focus on sustainability, EcoBali continues to lead the way in creating a cleaner and more environmentally conscious Bali.",
+          instagram: "-",
+          website: "https://ecobalirecycling.com",
+          logo: "images/eco-bali.png",
+        },
+
+        "trash-hero": {
+          name: "Trash Hero",
+          description:
+            "Trash Hero is a global volunteer movement dedicated to reducing waste through community clean-ups, education, and sustainable solutions. Founded in 2013, it operates in multiple countries, including Indonesia, promoting responsible waste management and plastic reduction.",
+          long: "Trash Hero Indonesia is part of a global volunteer movement dedicated to tackling plastic pollution through community action, education, and long-term sustainable solutions. It began as a simple beach cleanup in Thailand in 2013, but the idea quickly spread, reaching Indonesia and other countries where plastic waste is a major environmental issue. In Indonesia, where plastic pollution threatens marine life and coastal communities, Trash Hero has become an inspiring force for change.\n\nAt the heart of Trash Hero Indonesia’s work are its weekly cleanups where volunteers including locals, tourists, and businesses come together to remove plastic waste from beaches, streets, and rivers. These cleanups do more than just beautify the surroundings because they create a sense of responsibility and urgency about the waste crisis. Volunteers, especially children, see firsthand the impact of plastic pollution and start to rethink their own consumption habits. Many who join a cleanup for the first time return week after week, turning small actions into lasting change.\n\nBeyond cleanups, education is a key focus. Trash Hero Indonesia runs school programs that teach kids about plastic pollution and how to reduce waste in their daily lives. Their Kids’ Program, designed for local schools, introduces waste problems in a fun and engaging way, helping young Indonesians become future environmental leaders. By fostering awareness early on, the movement aims to create a generation that values sustainability.\n\nTrash Hero also supports communities by promoting sustainable solutions such as their reusable bottle program. Instead of relying on single-use plastics, they encourage people to switch to refillable water bottles with many local businesses offering free refills as part of a growing network. These small but meaningful changes reduce plastic waste at its source, making it easier for people to shift toward a zero-waste lifestyle.\n\nIn Indonesia, Trash Hero has expanded to multiple locations including Bali, Lombok, Jakarta, and other coastal regions where plastic waste is a daily struggle. The movement has removed tons of plastic waste but more importantly it has changed mindsets. By involving communities, Trash Hero ensures that the responsibility for waste management does not fall on just a few individuals or organizations because it becomes a shared mission.\n\nThe success of Trash Hero Indonesia comes from its grassroots approach. It does not rely on top-down policies but instead empowers local communities to take action in their own way. Whether through a child learning about plastic pollution in school, a fisherman joining a cleanup, or a café offering free water refills, every small step contributes to a larger movement.\n\nTrash Hero Indonesia proves that real change happens when ordinary people take action. By combining cleanups, education, and sustainable practices, the movement is helping to reshape Indonesia’s relationship with plastic one community at a time.",
+          instagram: "@trashheroindonesia",
+          website: "https://trashhero.org",
+          logo: "images/trash hero_edited.png",
+        },
+
+        "sungai-watch": {
+          name: "Sungai Watch",
+          description:
+            "Sungai Watch is an environmental organization dedicated to protecting Indonesia’s rivers from plastic pollution. Founded by the Bencheghib siblings, it installs floating barriers to intercept waste before it reaches the ocean, while also conducting clean-ups, waste sorting, and recycling initiatives.",
+          long: "Sungai Watch is an environmental organization dedicated to protecting and restoring Indonesia’s rivers by preventing plastic pollution from reaching the ocean. Founded in 2020 by siblings Gary, Sam, and Kelly Bencheghib, the organization focuses on developing simple yet effective technologies to intercept waste, conducting large-scale clean-up initiatives, and educating communities on sustainable waste management. Their mission is to create a cleaner, plastic-free Indonesia by tackling pollution at its source.\n\nA core strategy of Sungai Watch is the installation of trash barriers in rivers, designed to capture floating debris before it flows into the sea. These barriers help intercept plastic waste, which is then collected, sorted, and processed. As of recent reports, Sungai Watch has installed over 100 barriers across Bali, successfully preventing thousands of kilograms of waste from polluting the ocean.\n\nBeyond these technological efforts, the organization actively involves local communities through clean-up events and awareness campaigns. Volunteers participate in riverbank clean-ups and the removal of waste from illegal dumpsites, helping to foster a sense of responsibility toward the environment. These efforts not only result in cleaner rivers but also educate people on the importance of proper waste disposal.\n\nOnce collected, the waste is carefully sorted and processed. Organic waste is composted, while inorganic materials, particularly plastic, are cleaned and repurposed. Sungai Watch has partnered with companies to upcycle plastics into innovative products such as sandals and furniture, turning waste into valuable resources and promoting a circular economy.\n\nSince its inception, Sungai Watch has made a significant impact on river conservation efforts in Bali and beyond. Their work has inspired similar initiatives across Indonesia, contributing to a broader movement toward sustainable waste management. Looking ahead, they aim to expand their reach, install more barriers, and strengthen community engagement to further reduce plastic pollution.",
+          instagram: "@sungaiwatch",
+          website: "https://sungaiwatch.com",
+          logo: "images/sungai watch_edited_edited.png",
+        },
+
+        "coral-triangle": {
+          name: "Coral Triangle",
+          description:
+            "An Indonesian foundation dedicated to marine biodiversity conservation and sustainable coastal management. They provide training programs and educational initiatives to empower local communities and promote ecological sustainability.",
+          long: "The Coral Triangle Initiative on Coral Reefs, Fisheries, and Food Security is a regional partnership dedicated to protecting the world’s most diverse marine ecosystem. Covering six countries, Indonesia, Malaysia, the Philippines, Papua New Guinea, the Solomon Islands, and Timor-Leste, the Coral Triangle is home to over 75 percent of the world’s coral species and supports millions of people who rely on its resources for food and livelihoods. Established in 2009, the organization works to ensure the long-term sustainability of this vital marine region through conservation efforts, sustainable fisheries management, and climate change adaptation.\n\nThe initiative collaborates with governments, non-governmental organizations, and local communities to develop policies and programs that strengthen marine protected areas, reduce destructive fishing practices, and promote ecosystem-based management. Education and capacity-building are central to their approach, helping communities understand the importance of preserving marine biodiversity and equipping them with sustainable alternatives to harmful practices. By raising awareness and fostering local leadership, the organization empowers coastal populations to take an active role in protecting their environment.\n\nClimate change poses a significant threat to the Coral Triangle, with rising ocean temperatures leading to coral bleaching and habitat degradation. To address these challenges, the initiative integrates climate resilience strategies into its conservation efforts. Through scientific research, policy advocacy, and community-driven action, it works to mitigate environmental risks while ensuring that marine ecosystems continue to support future generations. By uniting efforts across borders, the Coral Triangle Initiative is shaping a sustainable future for both the ocean and the people who depend on it.",
+          instagram: "-",
+          website: "https://www.coraltrianglecenter.org/",
+          logo: "images/coral triangle_edited_edited.png",
+        },
+
+        "blue-corner": {
+          name: "Blue Corner",
+          description:
+            "Based in Nusa Lembongan, this organization conducts marine research, coral restoration, and reef monitoring. They offer scientific diver training and conservation programs to help restore degraded reef areas.",
+          long: "Blue Corner is a well-established dive center and marine conservation initiative based in Nusa Lembongan, Bali. It is recognized for its commitment to sustainable tourism and marine protection, providing eco-friendly dive experiences that emphasize environmental responsibility. The organization collaborates with researchers, local communities, and conservationists to protect marine life and restore coral reefs in the waters surrounding Nusa Lembongan, Nusa Penida, and Nusa Ceningan.\n\nBlue Corner is actively involved in marine research, coral restoration, and ocean cleanup efforts. Through artificial reef installations, coral transplantation, and the removal of marine debris, the organization works to mitigate human impact on the local marine ecosystem. They also offer educational programs for divers and the general public, raising awareness about marine conservation and the importance of protecting Bali’s underwater world. By combining tourism with environmental activism, Blue Corner demonstrates how responsible diving can contribute to ocean conservation while still supporting local economies.",
+          instagram: "-",
+          website: "https://www.bluecornerdive.com/",
+          logo: "images/Blue Corner_edited_edited.png",
+        },
+
+        ykan: {
+          name: "Yayasan Konservasi Alam Indonesia",
+          description:
+            "The Indonesian branch of The Nature Conservancy, focusing on marine conservation, sustainable fisheries, and habitat restoration. They aim to balance environmental protection with community development.",
+          long: "Yayasan Konservasi Alam Nusantara (YKAN) is a leading Indonesian nonprofit organization dedicated to the conservation of Indonesia’s forests, freshwater systems, and marine environments. The organization is affiliated with The Nature Conservancy and works closely with local communities, governments, and businesses to develop sustainable conservation strategies.\n\nYKAN’s marine conservation programs focus on protecting coral reefs, sustainable fisheries management, and the establishment of marine protected areas. The organization also works to combat deforestation by promoting sustainable land-use practices and restoring degraded landscapes. In freshwater ecosystems, YKAN plays a crucial role in water resource management, ensuring clean and sustainable water supplies for both human communities and biodiversity.\n\nOne of YKAN’s key approaches is integrating scientific research with traditional knowledge, allowing for conservation methods that are both effective and culturally respectful. The organization is also deeply involved in climate change mitigation, advocating for policies that reduce carbon emissions, protect critical habitats, and support the transition to renewable energy sources. By balancing environmental protection with economic development, YKAN aims to create long-term solutions that benefit both people and nature in Indonesia.",
+          email: "-",
+          website: "https://www.ykan.or.id/id/",
+          logo: "images/YKAN_edited_edited.png",
+        },
+
+        "north-bali-reef": {
+          name: "North Bali Reef Conservation",
+          description:
+            "A non-profit in Tianyar working to restore coral reefs by constructing artificial reef structures, organizing beach clean-ups, and educating local communities about marine conservation.",
+          long: "North Bali Reef Conservation is a volunteer-based initiative dedicated to protecting and restoring the coral reefs along Bali’s northern coastline. Unlike the more developed and touristic southern part of Bali, North Bali has seen significant damage to its reefs due to destructive fishing practices, pollution, and climate change. The organization works closely with local fishermen and coastal communities to restore marine biodiversity and promote sustainable fishing practices.\n\nOne of its main conservation efforts involves the construction and deployment of artificial reef structures, which provide a stable environment for corals to grow and marine life to thrive. These artificial reefs not only help rehabilitate damaged coral ecosystems but also create new habitats for fish and other marine species, ensuring long-term sustainability. The organization also runs regular beach and ocean cleanups to remove plastic waste and other pollutants that threaten marine life.\n\nEducation and community involvement are at the core of North Bali Reef Conservation’s mission. The initiative provides training programs for local fishermen, teaching them about sustainable fishing techniques that reduce harm to the reef while maintaining their livelihoods. Volunteers from around the world are invited to participate in reef conservation efforts, offering hands-on experience in marine restoration and environmental education. Through these efforts, North Bali Reef Conservation is helping to preserve one of Indonesia’s most vulnerable marine ecosystems while empowering local communities to become active stewards of the ocean.",
+          email: "-",
+          website: "https://northbalireefconservation.com/",
+          logo: "images/North Bali Reef Conservation_edited_edited_edited.png",
+        },
+
+        "forum-mangrove": {
+          name: "Forum Peduli Mangrove Bali",
+          description:
+            "Established in 2013, this organization focuses on protecting and rehabilitating Bali’s mangrove ecosystems. They engage local communities in replanting programs and environmental education to support coastal resilience.",
+          long: "Forum Peduli Mangrove Bali is a community-driven organization dedicated to protecting and restoring Bali’s mangrove forests. These mangroves, found mainly along the island’s coastlines and estuaries, serve as critical habitats for marine and terrestrial species, help prevent coastal erosion, and act as natural carbon sinks that mitigate climate change. However, rapid coastal development, pollution, and deforestation have significantly reduced Bali’s mangrove coverage, leading to habitat loss and increased vulnerability to natural disasters.\n\nTo address these challenges, Forum Peduli Mangrove Bali engages in mangrove reforestation efforts, planting thousands of mangrove seedlings each year to restore degraded areas. The organization also conducts educational programs in local schools and communities to raise awareness about the importance of mangrove ecosystems. By involving local residents in conservation activities, they promote a sense of ownership and long-term commitment to protecting Bali’s coastal environment.\n\nIn addition to restoration and education, the forum advocates for stronger environmental policies and works with local governments to enforce regulations that protect mangrove forests. They collaborate with researchers and conservationists to monitor the health of mangrove ecosystems and develop sustainable solutions that balance environmental protection with economic needs.\n\nThrough hands-on conservation, education, and advocacy, Forum Peduli Mangrove Bali is playing a vital role in ensuring the future of Bali’s coastal ecosystems. By restoring mangroves, they are not only preserving biodiversity but also enhancing the resilience of coastal communities against climate change and natural disasters.",
+          email: "-",
+          website: "https://www.instagram.com/mangrovecareforum/",
+          logo: "images/Mangrove Care Forum Bali_edited_edited.png",
+        },
+      };
+
+      const params = new URLSearchParams(window.location.search);
+      const org = params.get("org");
+      const partner = partners[org];
+
+      if (partner) {
+        document.getElementById("partner-name").textContent = partner.name;
+        document.getElementById("partner-title").textContent = partner.name;
+        document.getElementById("partner-description").textContent =
+          partner.description;
+        document.getElementById("partner-long").textContent = partner.long;
+        const ig = partner.instagram || partner.email || "-";
+        document.getElementById("partner-email").textContent = ig;
+
+        const site = document.getElementById("partner-website");
+        site.href = partner.website;
+        site.textContent = partner.website;
+
+        document.getElementById("partner-logo").src = partner.logo;
+      }
+    </script>
+
+    <section class="contact-page" id="contact">
+      <div class="contact-wrapper">
+        <div class="contact-left">
+          <h2>Contact Us</h2>
+          <p>
+            We are open to any questions or even volunteers who'd like to sign
+            up and help us around on connecting different organizations in Bali!
+            We also offer a platform for any collaborators who would like to
+            collaborate with us. Feel free to contact us.
+          </p>
+
+          <form
+            class="contact-form"
+            action="https://formspree.io/f/mqeqrjdr"
+            method="POST"
+          >
+            <div class="form-group">
+              <label for="conservation-name">Name</label>
+              <input
+                type="text"
+                id="conservation-name"
+                name="name"
+                placeholder="Your Name"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="conservation-email">Email</label>
+              <input
+                type="email"
+                id="conservation-email"
+                name="email"
+                placeholder="Your Email"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="conservation-message">Question</label>
+              <textarea
+                id="conservation-message"
+                name="message"
+                rows="4"
+                placeholder="Your Message"
+              ></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">Send Message</button>
+          </form>
+        </div>
+
+        <div class="contact-right">
+          <div class="info-box">
+            <h4><i class="fas fa-phone"></i> PHONE</h4>
+            <p>+62 813-3811-4095</p>
+          </div>
+          <div class="info-box">
+            <h4><i class="fas fa-envelope"></i> EMAIL</h4>
+            <p>keepbalisoceanalive@gmail.com</p>
+          </div>
+
+          <div class="social-buttons">
+            <a
+              href="https://www.instagram.com/kembali.biru/"
+              class="social instagram"
+              aria-label="Instagram"
+            >
+              <i class="fa-brands fa-instagram"></i> Instagram
+            </a>
+            <a
+              href="https://www.youtube.com/@kembalibiru"
+              class="social youtube"
+              aria-label="YouTube"
+            >
+              <i class="fa-brands fa-youtube"></i> YouTube
+            </a>
+          </div>
+
+          <p class="privacy">
+            <a href="#">Privacy Policy</a> | <a href="#hero">Back to Top</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>&copy; 2025 KemBALI Biru | All Rights Reserved</p>
+    </footer>
+    <script src="js/main.js"></script>
+  </body>
+</html>
