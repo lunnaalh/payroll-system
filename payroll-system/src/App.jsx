@@ -46,7 +46,7 @@ export default function App() {
       const data = new Uint8Array(evt.target.result);
       const wb = XLSX.read(data, { type: "array" });
       const ws = wb.Sheets[wb.SheetNames[0]];
-      const json = XLSX.utils.sheet_to_json(ws, { defval: "" });
+      const json = XLSX.utils.sheet_to_json(ws, { defval: "", range: 1 });
       const cleaned = json.map((r) => {
         const obj = {};
         Object.keys(r).forEach((k) => {
