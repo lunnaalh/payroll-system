@@ -47,9 +47,9 @@ function buildPDF(r) {
       );
       let val = r[actualKey];
       if (val === undefined || val === null || val === "") return 0;
-      if (typeof val === "string") {
-        return Number(val.replace(/Rp\s*/g, "").replace(/\./g, "").replace(/,/g, "").trim()) || 0;
-      }
+ if (typeof val === "string") {
+  return Number(val.replace(/Rp\s*/g, "").replace(/\./g, "").replace(/,/g, "").trim()) || 0;
+}
       return Number(val) || 0;
     };
 
@@ -66,7 +66,7 @@ function buildPDF(r) {
       doc.image(LOGO_PATH, 40, y - 25, { width: 80 });
     }
 
-    // Auto-generated date — computed at send time, no Excel input needed
+    // Auto-generated date computed at send time, no Excel input needed
     const now = new Date();
     const formattedDate = now.toLocaleDateString("en-GB", {
       day: "2-digit",
@@ -136,15 +136,15 @@ function buildPDF(r) {
       ["Adv Cash", getValue("Adv cash deductions")],
     ];
 
-    const benefits = [
+    const benefits = [ 
       ["BPJS Health", getValue("Benefit BPJS kesehatan")],
       ["BPJS Employment", getValue("Benefit BPJS Tenaga Kerja")],
-      ["PPH 21", getValue("Benefit PPH 21")],
-    ];
+      ["PPH 21", getValue("Benefit PPH 21")], 
+    ]; 
 
     doc.fontSize(7.5).font("Helvetica").fillColor("#333");
-    for (let i = 0; i < 10; i++) {
-      if (i % 2 === 0) {
+    for (let i = 0; i < 10; i++) { 
+      if (i % 2 === 0) { 
         doc.rect(col1X, y - 2, colWidth, ROW_HEIGHT).fill("#fafafa");
         if (i < deduction.length) doc.rect(col2X, y - 2, colWidth, ROW_HEIGHT).fill("#fafafa");
         if (i < benefits.length) doc.rect(col3X, y - 2, colWidth, ROW_HEIGHT).fill("#fafafa");

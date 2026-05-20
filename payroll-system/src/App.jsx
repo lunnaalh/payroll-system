@@ -1,6 +1,8 @@
 import { useState } from "react";
 import * as XLSX from "xlsx";
 import "./index.css";
+import { Routes, Route, Link, useNavigate } from "react-router-dom";
+import ShippingCost from "./ShippingCost.jsx";
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -138,98 +140,102 @@ export default function App() {
     );
   }
 
-  return (
-    <div className="layout">
-      <aside className="sidebar">
-        <h2>Ticket To The Moon</h2>
-        <p>Payroll</p>
-        <p style={{ fontSize: "12px" }}>
-          Logged in as:<br />
-          {user.email}
-        </p>
-        <button onClick={logout}>Logout</button>
-      </aside>
+ return (
+  <div className="layout">
+    <aside className="sidebar">
+      <h2>Ticket To The Moon</h2>
+     <Link to="/" style={{ textDecoration: "none" }}>
+  <p style={{
+    color: "rgba(255,255,255,0.7)",
+    padding: "8px 12px",
+    borderRadius: "6px",
+    cursor: "pointer",
+    fontSize: "14px",
+    transition: "background 0.2s",
+  }}
+    onMouseEnter={e => { e.target.style.background = "rgba(255,255,255,0.1)"; e.target.style.color = "white"; }}
+    onMouseLeave={e => { e.target.style.background = "transparent"; e.target.style.color = "rgba(255,255,255,0.7)"; }}
+  >Payroll</p>
+</Link>
+<Link to="/shipping" style={{ textDecoration: "none" }}>
+  <p style={{
+    color: "rgba(255,255,255,0.7)",
+    padding: "8px 12px",
+    borderRadius: "6px",
+    cursor: "pointer",
+    fontSize: "14px",
+    transition: "background 0.2s",
+  }}
+    onMouseEnter={e => { e.target.style.background = "rgba(255,255,255,0.1)"; e.target.style.color = "white"; }}
+    onMouseLeave={e => { e.target.style.background = "transparent"; e.target.style.color = "rgba(255,255,255,0.7)"; }}
+  >Shipping Cost</p>
+</Link>
+      <p style={{ fontSize: "12px" }}>
+        Logged in as:<br />
+        {user.email}
+      </p>
+      <button onClick={logout}>Logout</button>
+    </aside>
 
-      <main className="main">
-        <h1>Payroll System</h1>
-        <input type="file" accept=".xlsx,.xls" onChange={handleUpload} />
-        <h2>Payroll Summary</h2>
-        <div className="summary">
-          <div className="card">
-            <h3>Total Employees</h3>
-            <p>{totalEmployees}</p>
+    <Routes>
+      <Route path="/" element={
+        <main className="main">
+          <h1>Payroll System</h1>
+          <input type="file" accept=".xlsx,.xls" onChange={handleUpload} />
+          <h2>Payroll Summary</h2>
+          <div className="summary">
+            <div className="card"><h3>Total Employees</h3><p>{totalEmployees}</p></div>
+            <div className="card"><h3>Gross Payroll</h3><p>Rp {grossPayroll.toLocaleString()}</p></div>
+            <div className="card"><h3>Total Deductions</h3><p>Rp {totalDeductions.toLocaleString()}</p></div>
+            <div className="card"><h3>Net Payroll</h3><p>Rp {netPayroll.toLocaleString()}</p></div>
           </div>
-          <div className="card">
-            <h3>Gross Payroll</h3>
-            <p>Rp {grossPayroll.toLocaleString()}</p>
-          </div>
-          <div className="card">
-            <h3>Total Deductions</h3>
-            <p>Rp {totalDeductions.toLocaleString()}</p>
-          </div>
-          <div className="card">
-            <h3>Net Payroll</h3>
-            <p>Rp {netPayroll.toLocaleString()}</p>
-          </div>
-        </div>
-
-        <input
-          className="search"
-          placeholder="Search employee..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-
-        <div className="excel-wrap">
-          <table className="excel">
-            <thead>
-              <tr>
-                {headers.map((h) => (
-                  <th key={h}>{h}</th>
-                ))}
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {rows
-                .filter((r) =>
-                  String(r["Name"]).toLowerCase().includes(search.toLowerCase())
-                )
-                .map((r, i) => (
+          <input className="search" placeholder="Search employee..." value={search} onChange={(e) => setSearch(e.target.value)} />
+          <div className="excel-wrap">
+            <table className="excel">
+              <thead>
+                <tr>{headers.map((h) => <th key={h}>{h}</th>)}<th>Action</th></tr>
+              </thead>
+              <tbody>
+                {rows.filter((r) => String(r["Name"]).toLowerCase().includes(search.toLowerCase())).map((r, i) => (
                   <tr key={i}>
-                    {headers.map((h) => (
-                      <td key={h}>{r[h]}</td>
-                    ))}
+                    {headers.map((h) => <td key={h}>{r[h]}</td>)}
                     <td>
-                      <button
-                        onClick={() => sendSingle(r)}
-                        style={{
-                          backgroundColor: "#003D5C",
-                          color: "white",
-                          border: "none",
-                          padding: "4px 10px",
-                          borderRadius: "4px",
-                          cursor: "pointer",
-                        }}
-                      >
-                        📧
-                      </button>
+                      <button onClick={() => sendSingle(r)} style={{ backgroundColor: "#003D5C", color: "white", border: "none", padding: "4px 10px", borderRadius: "4px", cursor: "pointer" }}>📧</button>
                     </td>
                   </tr>
                 ))}
-            </tbody>
-          </table>
-        </div>
-
-        <button
-          className="pdf"
-          onClick={sendEmailsToAll}
-          disabled={sending}
-          style={{ backgroundColor: sending ? "#ccc" : "#4CAF50" }}
-        >
-          {sending ? "Sending..." : "📧 Send Emails to All Employees"}
-        </button>
-      </main>
-    </div>
-  );
+              </tbody>
+            </table>
+          </div>
+          <button className="pdf" onClick={sendEmailsToAll} disabled={sending} style={{ backgroundColor: sending ? "#ccc" : "#4CAF50" }}>
+            {sending ? "Sending..." : "📧 Send Emails to All Employees"}
+          </button>
+        </main>
+      } />
+      <Route path="/shipping" element={<ShippingCost />} />
+    </Routes>
+  </div>
+);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
