@@ -41,6 +41,17 @@ export default function App() {
     return Number(cleaned) || 0;
   };
 
+  const HEADERS = [
+    "NO", "NO NIK", "ACCOUNT", "NAME", "DATE OF HIRED",
+    "YEAR", "MONTH", "POSITION", "WORKING DAY",
+    "Basic salary 2026", "yearly working", "skill", "TOTAL FIXED",
+    "Monthly Meal allowance", "Tranport allowance", "overtime",
+    "Meal for overtime", "Productivity", "Homework earning", "THR",
+    "TOTAL INCOME", "Excessive Absence", "Advance cash",
+    "TOTAL Deduction", "BPJS KESEHATAN", "BPJS TENAGA KERJA",
+    "PPH 21", "TOTAL BENEFIT", "TAKE HOME", "email address"
+  ];
+
   const handleUpload = (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -49,18 +60,17 @@ export default function App() {
       const data = new Uint8Array(evt.target.result);
       const wb = XLSX.read(data, { type: "array" });
       const ws = wb.Sheets[wb.SheetNames[0]];
-      // range: 5 skips the 5 merged header rows, row 6 has the real column names
-      const json = XLSX.utils.sheet_to_json(ws, { defval: "", range: 5 });
-      const cleaned = json.map((r) => {
-        const obj = {};
-        Object.keys(r).forEach((k) => {
-          if (!k.toLowerCase().includes("unnamed")) obj[k.trim()] = r[k];
-        });
-        return obj;
+      // range: 6 = skip to row 7 (0-indexed), which is the first data row
+      // header array = hardcoded column names matching the sheet exactly
+      const json = XLSX.utils.sheet_to_json(ws, {
+        defval: "",
+        range: 6,
+        header: HEADERS,
       });
-      setHeaders(Object.keys(cleaned[0] || {}));
-      // column is "NAME" in the actual sheet (all caps)
-      setRows(cleaned.filter((r) => r["NAME"]));
+      // filter out any rows without a name (empty rows at bottom)
+      const filtered = json.filter((r) => r["NAME"] && String(r["NAME"]).trim() !== "");
+      setHeaders(HEADERS);
+      setRows(filtered);
     };
     reader.readAsArrayBuffer(file);
   };
@@ -99,7 +109,7 @@ export default function App() {
   };
 
   const sendSingle = async (r) => {
-    const empEmail = r.Email || r["email address"] || "";
+    const empEmail = r["email address"] || r.Email || "";
     if (!empEmail || empEmail.trim() === "") {
       alert("No email for this employee!");
       return;
