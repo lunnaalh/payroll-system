@@ -1,20 +1,63 @@
 import { useState } from "react";
+import * as XLSX from "xlsx";
 
-const mockData = [
-  { awb: "1234567890", invoice: "INV-001", carrier: "DHL", destination: "Singapore", date: "2026-04-28", freight: 38.00, duty: 7.20, weight: "2.5 kg", billed: 45.20, status: "Delivered" },
-  { awb: "9876543210", invoice: "INV-002", carrier: "FedEx", destination: "Tokyo, JP", date: "2026-04-28", freight: 80.00, duty: 11.40, weight: "4.1 kg", billed: 91.40, status: "Delivered" },
-  { awb: "1122334455", invoice: "INV-003", carrier: "DHL", destination: "Sydney, AU", date: "2026-04-27", freight: 100.00, duty: 14.60, weight: "6.0 kg", billed: 114.60, status: "Out for Delivery" },
-  { awb: "5566778899", invoice: "INV-004", carrier: "FedEx", destination: "Dubai, UAE", date: "2026-04-27", freight: 68.00, duty: 7.00, weight: "3.2 kg", billed: 75.00, status: "In Transit" },
-  { awb: "4455667788", invoice: "INV-005", carrier: "DHL", destination: "Jakarta, ID", date: "2026-04-29", freight: null, duty: null, weight: null, billed: null, status: "Customs Clearance Process" },
-  { awb: "8899001122", invoice: "INV-006", carrier: "FedEx", destination: "Bangkok, TH", date: "2026-04-30", freight: null, duty: null, weight: null, billed: null, status: "In Transit" },
-  { awb: "9900112233", invoice: "INV-007", carrier: "DHL", destination: "Mumbai, IN", date: "2026-04-30", freight: null, duty: null, weight: null, billed: null, status: "In Transit" },
-];
-
-export default function ShippingCost() {
-  const [data, setData] = useState(mockData);
+export default function ShippingCost({ data, setData }) {
   const [search, setSearch] = useState("");
   const [carrierFilter, setCarrierFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
+
+  const handleUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (evt) => {
+      const raw = new Uint8Array(evt.target.result);
+      const wb = XLSX.read(raw, { type: "array" });
+      const allRows = [];
+      wb.SheetNames.forEach((sheetName) => {
+        const ws = wb.Sheets[sheetName];
+        const json = XLSX.utils.sheet_to_json(ws, { defval: "", range: 1 });
+        json.forEach((r) => {
+          const awb = String(r["AWB NO"] || r["BL / AWB NO"] || "").replace(/\s/g, "");
+          const carrier = String(r["Courier"] || "").toUpperCase().includes("FEDEX") ? "FedEx" : "DHL";
+          const invoice = String(r["No Invoice"] || "—");
+          const destination = String(r["Country"] || "—");
+          const rawDate = r["DATE"];
+          let date = "—";
+          try {
+            if (rawDate && typeof rawDate === "number") {
+              const d = new Date(Math.round((rawDate - 25569) * 86400 * 1000));
+              if (!isNaN(d.getTime())) date = d.toISOString().split("T")[0];
+            } else if (rawDate) {
+              date = String(rawDate);
+            }
+          } catch (e) {
+            date = "—";
+          }
+          const weight = r["Weight of shipment (kgs)"] || r["Weight"] || null;
+          const customer = String(r["Nama Customer"] || "—");
+          if (awb && awb.length > 3) {
+            allRows.push({
+              awb,
+              invoice,
+              carrier,
+              destination,
+              date,
+              weight: weight ? `${weight} kg` : null,
+              freight: null,
+              duty: null,
+              billed: null,
+              status: "Pending",
+              customer,
+              sheet: sheetName,
+            });
+          }
+        });
+      });
+      setData(allRows);
+    };
+    reader.readAsArrayBuffer(file);
+  };
 
   const filtered = data.filter((r) =>
     r.awb.includes(search) &&
@@ -23,11 +66,11 @@ export default function ShippingCost() {
   );
 
   const totalCost = data.filter(r => r.billed).reduce((s, r) => s + r.billed, 0);
-  const pendingCount = data.filter(r => !r.billed).length;
+  const pendingCount = data.filter(r => r.status === "Pending").length;
 
   const fetchSingle = async (awb, carrier) => {
     setData(prev => prev.map(r =>
-      r.awb === awb ? { ...r, status: "In Transit" } : r
+      r.awb === awb ? { ...r, status: "Fetching..." } : r
     ));
 
     try {
@@ -38,40 +81,41 @@ export default function ShippingCost() {
       });
 
       const result = await response.json();
-      console.log("FedEx response:", result);
 
       if (result.success) {
         const trackData = result.data?.output?.completeTrackResults?.[0]?.trackResults?.[0];
-        console.log("Track data:", trackData);
         const status = trackData?.latestStatusDetail?.description ||
                        trackData?.latestStatusDetail?.statusByLocale ||
                        "In Transit";
         const weight = trackData?.packageDetails?.weightAndDimensions?.weight?.[0]?.value
           ? `${trackData.packageDetails.weightAndDimensions.weight[0].value} kg`
-          : "—";
+          : null;
 
         setData(prev => prev.map(r =>
-          r.awb === awb ? { ...r, status, weight } : r
+          r.awb === awb ? { ...r, status, weight: weight || r.weight } : r
         ));
       } else {
-        alert("Could not fetch shipment: " + (result.error || "Unknown error"));
         setData(prev => prev.map(r =>
-          r.awb === awb ? { ...r, status: "In Transit" } : r
+          r.awb === awb ? { ...r, status: "Error" } : r
         ));
       }
     } catch (err) {
       console.error("Fetch error:", err);
-      alert("Failed to connect to server!");
+      setData(prev => prev.map(r =>
+        r.awb === awb ? { ...r, status: "Error" } : r
+      ));
     }
   };
 
   const fetchAll = () => {
-    data.filter(r => !r.billed).forEach(r => fetchSingle(r.awb, r.carrier));
+    data.filter(r => r.status === "Pending" || r.status === "Error").forEach(r => fetchSingle(r.awb, r.carrier));
   };
 
   return (
     <main className="main">
       <h1>Shipping Cost</h1>
+
+      <input type="file" accept=".xlsx,.xls" onChange={handleUpload} style={{ marginBottom: "1.5rem", background: "white", border: "1px dashed #cbd5f5", padding: "14px", borderRadius: "10px", cursor: "pointer", display: "block" }} />
 
       <div className="summary">
         <div className="card"><h3>Total Shipments</h3><p>{data.length}</p></div>
@@ -93,10 +137,12 @@ export default function ShippingCost() {
         </select>
         <select className="search" value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
           <option value="">All statuses</option>
+          <option value="Pending">Pending</option>
           <option value="In Transit">In Transit</option>
           <option value="Customs Clearance Process">Customs Clearance Process</option>
           <option value="Out for Delivery">Out for Delivery</option>
           <option value="Delivered">Delivered</option>
+          <option value="Error">Error</option>
         </select>
         <button className="pdf" onClick={fetchAll} style={{ backgroundColor: "#4CAF50" }}>
           Fetch All Costs
@@ -110,12 +156,13 @@ export default function ShippingCost() {
               <th>Invoice #</th>
               <th>AWB Number</th>
               <th>Carrier</th>
+              <th>Customer</th>
               <th>Destination</th>
               <th>Date</th>
               <th>Weight</th>
               <th>Freight Cost</th>
-              <th>Duty Cost</th>   
-              <th>Total Billed</th>  
+              <th>Duty Cost</th>
+              <th>Total Billed</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
@@ -125,7 +172,8 @@ export default function ShippingCost() {
               <tr key={i}>
                 <td>{r.invoice}</td>
                 <td><code>{r.awb}</code></td>
-                <td>{r.carrier}</td> 
+                <td>{r.carrier}</td>
+                <td>{r.customer}</td>
                 <td>{r.destination}</td>
                 <td>{r.date}</td>
                 <td style={{ color: r.weight ? "inherit" : "#aaa", fontStyle: r.weight ? "normal" : "italic" }}>{r.weight || "—"}</td>
@@ -133,12 +181,12 @@ export default function ShippingCost() {
                 <td style={{ color: r.duty ? "inherit" : "#aaa", fontStyle: r.duty ? "normal" : "italic" }}>{r.duty ? `$${r.duty.toFixed(2)}` : "—"}</td>
                 <td style={{ fontWeight: r.billed ? "600" : "normal", color: r.billed ? "inherit" : "#aaa", fontStyle: r.billed ? "normal" : "italic" }}>{r.billed ? `$${r.billed.toFixed(2)}` : "—"}</td>
                 <td>{r.status}</td>
-                <td>
+                <td> 
                   <button
-                    onClick={() => fetchSingle(r.awb, r.carrier)}
+                    onClick={() => fetchSingle(r.awb, r.carrier)} 
                     style={{ backgroundColor: "#003D5C", color: "white", border: "none", padding: "4px 10px", borderRadius: "4px", cursor: "pointer" }}
                   >
-                    {r.billed ? "Refresh" : "Fetch"}
+                    {r.status === "Fetching..." ? "..." : "Fetch"}
                   </button>
                 </td>
               </tr>
@@ -148,4 +196,4 @@ export default function ShippingCost() {
       </div>
     </main>
   );
-}
+} 
