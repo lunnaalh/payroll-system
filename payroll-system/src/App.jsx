@@ -49,7 +49,8 @@ export default function App() {
       const data = new Uint8Array(evt.target.result);
       const wb = XLSX.read(data, { type: "array" });
       const ws = wb.Sheets[wb.SheetNames[0]];
-      const json = XLSX.utils.sheet_to_json(ws, { defval: "", range: 1 });
+      // range: 5 skips the 5 merged header rows, row 6 has the real column names
+      const json = XLSX.utils.sheet_to_json(ws, { defval: "", range: 5 });
       const cleaned = json.map((r) => {
         const obj = {};
         Object.keys(r).forEach((k) => {
@@ -58,15 +59,16 @@ export default function App() {
         return obj;
       });
       setHeaders(Object.keys(cleaned[0] || {}));
-      setRows(cleaned.filter((r) => r["Name"]));
+      // column is "NAME" in the actual sheet (all caps)
+      setRows(cleaned.filter((r) => r["NAME"]));
     };
     reader.readAsArrayBuffer(file);
   };
 
   const totalEmployees = rows.length;
-  const grossPayroll = rows.reduce((s, r) => s + num(r["TotalEarnings"]), 0);
-  const totalDeductions = rows.reduce((s, r) => s + num(r["Total deduction"]), 0);
-  const netPayroll = rows.reduce((s, r) => s + num(r["NetPay"]), 0);
+  const grossPayroll = rows.reduce((s, r) => s + num(r["TOTAL INCOME"]), 0);
+  const totalDeductions = rows.reduce((s, r) => s + num(r["TOTAL Deduction"]), 0);
+  const netPayroll = rows.reduce((s, r) => s + num(r["TAKE HOME"]), 0);
 
   const sendEmailsToAll = async () => {
     if (rows.length === 0) {
@@ -97,7 +99,8 @@ export default function App() {
   };
 
   const sendSingle = async (r) => {
-    if (!r.Email || r.Email.trim() === "") {
+    const empEmail = r.Email || r["email address"] || "";
+    if (!empEmail || empEmail.trim() === "") {
       alert("No email for this employee!");
       return;
     }
@@ -112,7 +115,7 @@ export default function App() {
       );
       const data = await response.json();
       if (data.success) {
-        alert(`✅ Sent to ${r.Name}!`);
+        alert(`✅ Sent to ${r["NAME"]}!`);
       } else {
         alert(`❌ Error: ${data.error}`);
       }
@@ -147,13 +150,15 @@ export default function App() {
         <h2>Ticket To The Moon</h2>
         <div style={{ display: "flex", flexDirection: "column", gap: "0px" }}>
           <Link to="/" style={{ textDecoration: "none" }}>
-            <p style={{ color: "rgba(255,255,255,0.7)", padding: "8px 12px", borderRadius: "6px", cursor: "pointer", fontSize: "14px", transition: "background 0.2s" }}
+            <p
+              style={{ color: "rgba(255,255,255,0.7)", padding: "8px 12px", borderRadius: "6px", cursor: "pointer", fontSize: "14px", transition: "background 0.2s" }}
               onMouseEnter={e => { e.target.style.background = "rgba(255,255,255,0.1)"; e.target.style.color = "rgba(255,255,255,0.85)"; }}
               onMouseLeave={e => { e.target.style.background = "transparent"; e.target.style.color = "rgba(255,255,255,0.7)"; }}
             >Payroll</p>
           </Link>
           <Link to="/shipping" style={{ textDecoration: "none" }}>
-            <p style={{ color: "rgba(255,255,255,0.7)", padding: "8px 12px", borderRadius: "6px", cursor: "pointer", fontSize: "14px", transition: "background 0.2s" }}
+            <p
+              style={{ color: "rgba(255,255,255,0.7)", padding: "8px 12px", borderRadius: "6px", cursor: "pointer", fontSize: "14px", transition: "background 0.2s" }}
               onMouseEnter={e => { e.target.style.background = "rgba(255,255,255,0.1)"; e.target.style.color = "rgba(255,255,255,0.85)"; }}
               onMouseLeave={e => { e.target.style.background = "transparent"; e.target.style.color = "rgba(255,255,255,0.7)"; }}
             >Shipping Cost</p>
@@ -178,25 +183,45 @@ export default function App() {
               <div className="card"><h3>Total Deductions</h3><p>Rp {totalDeductions.toLocaleString()}</p></div>
               <div className="card"><h3>Net Payroll</h3><p>Rp {netPayroll.toLocaleString()}</p></div>
             </div>
-            <input className="search" placeholder="Search employee..." value={search} onChange={(e) => setSearch(e.target.value)} />
+            <input
+              className="search"
+              placeholder="Search employee..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
             <div className="excel-wrap">
               <table className="excel">
                 <thead>
-                  <tr>{headers.map((h) => <th key={h}>{h}</th>)}<th>Action</th></tr>
+                  <tr>
+                    {headers.map((h) => <th key={h}>{h}</th>)}
+                    <th>Action</th>
+                  </tr>
                 </thead>
                 <tbody>
-                  {rows.filter((r) => String(r["Name"]).toLowerCase().includes(search.toLowerCase())).map((r, i) => (
-                    <tr key={i}>
-                      {headers.map((h) => <td key={h}>{r[h]}</td>)}
-                      <td>
-                        <button onClick={() => sendSingle(r)} style={{ backgroundColor: "#003D5C", color: "white", border: "none", padding: "4px 10px", borderRadius: "4px", cursor: "pointer" }}>📧</button>
-                      </td>
-                    </tr>
-                  ))}
+                  {rows
+                    .filter((r) =>
+                      String(r["NAME"]).toLowerCase().includes(search.toLowerCase())
+                    )
+                    .map((r, i) => (
+                      <tr key={i}>
+                        {headers.map((h) => <td key={h}>{r[h]}</td>)}
+                        <td>
+                          <button
+                            onClick={() => sendSingle(r)}
+                            style={{ backgroundColor: "#003D5C", color: "white", border: "none", padding: "4px 10px", borderRadius: "4px", cursor: "pointer" }}
+                          >📧</button>
+                        </td>
+                      </tr>
+                    ))}
                 </tbody>
               </table>
             </div>
-            <button className="pdf" onClick={sendEmailsToAll} disabled={sending} style={{ backgroundColor: sending ? "#ccc" : "#4CAF50" }}>
+            <button
+              className="pdf"
+              onClick={sendEmailsToAll}
+              disabled={sending}
+              style={{ backgroundColor: sending ? "#ccc" : "#4CAF50" }}
+            >
               {sending ? "Sending..." : "📧 Send Emails to All Employees"}
             </button>
           </main>
