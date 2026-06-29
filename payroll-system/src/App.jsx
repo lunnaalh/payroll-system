@@ -47,7 +47,7 @@ export default function App() {
   "Basic salary 2026", "yearly working", "skill", "TOTAL FIXED",
   "Monthly Meal allowance", "Tranport allowance", "overtime",
   "Meal for overtime", "Productivity", "Homework earning", "THR",
-  "TOTAL INCOME", "Tidak memenuhi Target", "Excessive Absence",
+  "TOTAL INCOME", "Target Not Achieved", "Excessive Absence",
   "Advance cash", "TOTAL Deduction", "BPJS  KESEHATAN",
   "BPJS  TENAGA KERJA", "PPH 21", "TOTAL", "TAKE HOME",
   "email address"
