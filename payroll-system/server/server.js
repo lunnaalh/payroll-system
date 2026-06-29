@@ -167,17 +167,7 @@ function buildPDF(r) {
     });
     y += 28;
 
-    // ---- Income rows (matches spreadsheet column order) ----
-    // Col 9: Basic salary 2026
-    // Col 10: yearly working (Fixed Allowance)
-    // Col 11: skill (Fixed Allowance)
-    // Col 13: Monthly Meal allowance (Non-Fixed)
-    // Col 14: Tranport allowance (Non-Fixed)
-    // Col 15: overtime (Non-Fixed)
-    // Col 16: Meal for overtime (Non-Fixed)
-    // Col 17: Productivity (Non-Fixed)
-    // Col 18: Homework earning (Non-Fixed)
-    // Col 19: THR (Non-Fixed)
+    // ---- Income rows ----
     const income = [
       ["Basic Salary",        getValue("Basic salary 2026") || getValue("BasicSalary")],
       ["Yearly Working Allow.", getValue("yearly working") || getValue("YearlyWorkingAllowance")],
@@ -192,17 +182,13 @@ function buildPDF(r) {
     ];
 
     // ---- Deduction rows ----
-    // Col 21: Excessive Absence / absent berlebihan
-    // Col 22: Advance cash
     const deduction = [
-      ["Excessive Absence",   getValue("Excessive Absence/ absent berlebihan'") || getValue("ExcessiveAbsence") || getValue("Other Deductions")],
-      ["Advance Cash",        getValue("Advance cash") || getValue("Adv cash deductions")],
+      ["Target Not Achieved",  getValue("Tidak memenuhi Target")],
+      ["Excessive Absence",    getValue("Excessive Absence/ absent berlebihan'") || getValue("ExcessiveAbsence") || getValue("Other Deductions")],
+      ["Advance Cash",         getValue("Advance cash") || getValue("Adv cash deductions")],
     ];
 
     // ---- Benefit rows ----
-    // Col 24: BPJS KESEHATAN
-    // Col 25: BPJS TENAGA KERJA
-    // Col 26: PPH 21
     const benefits = [
       ["BPJS Health",      getValue("BPJS  KESEHATAN") || getValue("Benefit BPJS kesehatan")],
       ["BPJS Employment",  getValue("BPJS  TENAGA KERJA") || getValue("Benefit BPJS Tenaga Kerja")],
@@ -251,9 +237,6 @@ function buildPDF(r) {
     y += 10;
 
     /* ========== TOTALS ROW ========== */
-    // Col 20: TOTAL INCOME
-    // Col 23: TOTAL Deduction
-    // Col 27: TOTAL (benefit)
     doc.fontSize(8).font("Helvetica-Bold").fillColor("#1a1a1a");
     doc.text("TOTAL", col1X + 5, y);
     doc.text(
@@ -280,7 +263,6 @@ function buildPDF(r) {
     y += 25;
 
     /* ========== TAKE HOME PAY ========== */
-    // Col 28: TAKE HOME
     doc
       .roundedRect(280, y, 275, 35, 4)
       .lineWidth(1.5)
