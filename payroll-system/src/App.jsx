@@ -42,15 +42,16 @@ export default function App() {
   };
 
   const HEADERS = [
-    "NO", "NO NIK", "ACCOUNT", "NAME", "DATE OF HIRED",
-    "YEAR", "MONTH", "POSITION", "WORKING DAY",
-    "Basic salary 2026", "yearly working", "skill", "TOTAL FIXED",
-    "Monthly Meal allowance", "Tranport allowance", "overtime",
-    "Meal for overtime", "Productivity", "Homework earning", "THR",
-    "TOTAL INCOME", "Excessive Absence", "Advance cash",
-    "TOTAL Deduction", "BPJS KESEHATAN", "BPJS TENAGA KERJA",
-    "PPH 21", "TOTAL BENEFIT", "TAKE HOME", "email address"
-  ];
+  "NO", "NO NIK", "ACCOUNT NOMBER MAYBANK", "NAME", "DATE OF HIRED",
+  "YEAR", "MONTH", "POSITION", "WORKING DAY",
+  "Basic salary 2026", "yearly working", "skill", "TOTAL FIXED",
+  "Monthly Meal allowance", "Tranport allowance", "overtime",
+  "Meal for overtime", "Productivity", "Homework earning", "THR",
+  "TOTAL INCOME", "Tidak memenuhi Target", "Excessive Absence",
+  "Advance cash", "TOTAL Deduction", "BPJS  KESEHATAN",
+  "BPJS  TENAGA KERJA", "PPH 21", "TOTAL", "TAKE HOME",
+  "email address"
+];
 
   const handleUpload = (e) => {
     const file = e.target.files[0];
